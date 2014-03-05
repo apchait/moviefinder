@@ -1,0 +1,25 @@
+<h1>Listing writers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @writers.each do |writer| %>
+      <tr>
+        <td><%= link_to 'Show', writer %></td>
+        <td><%= link_to 'Edit', edit_writer_path(writer) %></td>
+        <td><%= link_to 'Destroy', writer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Writer', new_writer_path %>
