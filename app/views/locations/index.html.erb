@@ -7,9 +7,9 @@
       <th>Lat</th>
       <th>Long</th>
       <th>Ne lat</th>
-      <th>Ne long</th>
+      <th>Ne lng</th>
       <th>Sw lat</th>
-      <th>Sw long</th>
+      <th>Sw lng</th>
       <th>Movie</th>
       <th></th>
       <th></th>
@@ -22,11 +22,11 @@
       <tr>
         <td><%= location.formatted_address %></td>
         <td><%= location.lat %></td>
-        <td><%= location.long %></td>
+        <td><%= location.lng %></td>
         <td><%= location.ne_lat %></td>
-        <td><%= location.ne_long %></td>
+        <td><%= location.ne_lng %></td>
         <td><%= location.sw_lat %></td>
-        <td><%= location.sw_long %></td>
+        <td><%= location.sw_lng %></td>
         <td><%= location.movie_id %></td>
         <td><%= link_to 'Show', location %></td>
         <td><%= link_to 'Edit', edit_location_path(location) %></td>

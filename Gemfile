@@ -9,6 +9,10 @@ gem 'pg'
 # For Autocomplete
 gem 'jquery-ui-rails'
 
+# For accessing Google API
+gem 'httparty'
+# gem 'gdata'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 

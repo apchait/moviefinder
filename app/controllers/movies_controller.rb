@@ -24,8 +24,13 @@ class MoviesController < ApplicationController
     end
     director_string = director_string[0..-3]
 
+    geojson = []
+    @movie.locations.each do |l|
+      geojson << l.geojson
+    end
+    
     respond_to do |format|
-      format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string, :locations => @movie.locations) }
+      format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string, :locations => geojson) }
     end
   end
 

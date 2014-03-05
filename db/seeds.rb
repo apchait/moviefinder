@@ -4,27 +4,35 @@ filename = 'public/Film_Locations_in_San_Francisco_cleaned.csv'
 
 columns = {:title => 0, :release_year => 1, :location => 2, :fun_facts => 3, :production_company => 4, :distributor => 5, :director => 6, :writer => 7, :actor1 => 8, :actor2 => 9, :actor3 => 10}
 
-pure = []
-paren = []
-pier = []
-none = []
+# pure = []
+# paren = []
+# pier = []
+# none = []
 # CSV.foreach(filename, :headers => true) do |row|
-# 	location = row[columns['locations']]
+# 	base_url = "https://maps.googleapis.com/maps/api/geocode/json?address="
+# 	key = "&sensor=true&key=AIzaSyBnp5wx1dBlTVW-CmTYsX6-O92GyGnhs9o"
+# 	location = row[columns[:location]]
 # 	if location
-# 		# If the string starts with the address
-# 		pure_match = location.match(/(^\d+.*)/) 
-# 		# Some strings have a name then an address in parens
-# 		paren_match = location.match(/\((\d+.*?)\)/)
-# 		pier_match = false		
-# 		if pure_match
-# 			pure << pure_match
-# 		elsif pier_match
-# 			pier << location
-# 		elsif paren_match
-# 			paren << [location, paren_match[1]]
-# 		else
-# 			none << location
-# 		end
+# 		url = base_url + location.gsub(' ', '+') + key
+# 		response = HTTParty.get(url)
+
+
+		# Get it from google api
+
+		# # If the string starts with the address
+		# pure_match = location.match(/(^\d+.*)/) 
+		# # Some strings have a name then an address in parens
+		# paren_match = location.match(/\((\d+.*?)\)/)
+		# pier_match = false		
+		# if pure_match
+		# 	pure << pure_match
+		# elsif pier_match
+		# 	pier << location
+		# elsif paren_match
+		# 	paren << [location, paren_match[1]]
+		# else
+		# 	none << location
+		# end
 # 	end
 # end
 
@@ -35,10 +43,13 @@ none = []
 # puts 'none'
 # puts none
 
+
+
 Movie.delete_all
 Actor.delete_all
 Writer.delete_all
 Director.delete_all
+Location.delete_all
 
 CSV.foreach(filename, :headers => true) do |row|
 
@@ -48,11 +59,11 @@ CSV.foreach(filename, :headers => true) do |row|
 	movie = Movie.find_or_create_by title: title
 	# Only update the attributes if we haven't already created the movie before
 	if not movie.downcase_title
-		movie.update_attributes downcase_title: title.downcase, release_year: row[columns[:release_year]], fun_facts: row[columns[:fun_facts]], production_company: row[columns[:production_company]], distributor: row[columns[:distributor]]
+		movie.update_attributes downcase_title: title.downcase, release_year: row[columns[:release_year]], production_company: row[columns[:production_company]], distributor: row[columns[:distributor]]
 	end
 
 	# Still need to create a new location for every row
-	location = Location.create description: row[columns[:location]], movie_id: movie.id
+	location = Location.create description: row[columns[:location]], fun_facts: row[columns[:fun_facts]], movie_id: movie.id
 
 
 	# REFACTOR - short circuit a way out by checking if the movie already has writers/directors/actors instead of pulling from the db to check, still going to need one db check

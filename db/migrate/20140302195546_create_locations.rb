@@ -4,11 +4,11 @@ class CreateLocations < ActiveRecord::Migration
       t.string :description
       t.string :formatted_address
       t.decimal :lat
-      t.decimal :long
+      t.decimal :lng
       t.decimal :ne_lat
-      t.decimal :ne_long
+      t.decimal :ne_lng
       t.decimal :sw_lat
-      t.decimal :sw_long
+      t.decimal :sw_lng
       t.integer :movie_id
 
       t.timestamps

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140302195546) do
+ActiveRecord::Schema.define(version: 20140305222922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,21 +20,21 @@ ActiveRecord::Schema.define(version: 20140302195546) do
     t.string   "description"
     t.string   "formatted_address"
     t.decimal  "lat"
-    t.decimal  "long"
+    t.decimal  "lng"
     t.decimal  "ne_lat"
-    t.decimal  "ne_long"
+    t.decimal  "ne_lng"
     t.decimal  "sw_lat"
-    t.decimal  "sw_long"
+    t.decimal  "sw_lng"
     t.integer  "movie_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "fun_facts"
   end
 
   create_table "movies", force: true do |t|
     t.string   "title"
     t.string   "downcase_title"
     t.string   "release_year"
-    t.text     "fun_facts"
     t.string   "production_company"
     t.string   "distributor"
     t.datetime "created_at"

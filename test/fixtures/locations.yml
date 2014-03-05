@@ -3,19 +3,19 @@
 one:
   formatted_address: MyString
   lat: 9.99
-  long: 9.99
+  lng: 9.99
   ne_lat: 9.99
-  ne_long: 9.99
+  ne_lng: 9.99
   sw_lat: 9.99
-  sw_long: 9.99
+  sw_lng: 9.99
   movie_id: 1
 
 two:
   formatted_address: MyString
   lat: 9.99
-  long: 9.99
+  lng: 9.99
   ne_lat: 9.99
-  ne_long: 9.99
+  ne_lng: 9.99
   sw_lat: 9.99
-  sw_long: 9.99
+  sw_lng: 9.99
   movie_id: 1

@@ -18,7 +18,7 @@ class LocationsControllerTest < ActionController::TestCase
 
   test "should create location" do
     assert_difference('Location.count') do
-      post :create, location: { formatted_address: @location.formatted_address, lat: @location.lat, long: @location.long, movie_id: @location.movie_id, ne_lat: @location.ne_lat, ne_long: @location.ne_long, sw_lat: @location.sw_lat, sw_long: @location.sw_long }
+      post :create, location: { formatted_address: @location.formatted_address, lat: @location.lat, lng: @location.lng, movie_id: @location.movie_id, ne_lat: @location.ne_lat, ne_lng: @location.ne_lng, sw_lat: @location.sw_lat, sw_lng: @location.sw_lng }
     end
 
     assert_redirected_to location_path(assigns(:location))
@@ -35,7 +35,7 @@ class LocationsControllerTest < ActionController::TestCase
   end
 
   test "should update location" do
-    patch :update, id: @location, location: { formatted_address: @location.formatted_address, lat: @location.lat, long: @location.long, movie_id: @location.movie_id, ne_lat: @location.ne_lat, ne_long: @location.ne_long, sw_lat: @location.sw_lat, sw_long: @location.sw_long }
+    patch :update, id: @location, location: { formatted_address: @location.formatted_address, lat: @location.lat, lng: @location.lng, movie_id: @location.movie_id, ne_lat: @location.ne_lat, ne_lng: @location.ne_lng, sw_lat: @location.sw_lat, sw_lng: @location.sw_lng }
     assert_redirected_to location_path(assigns(:location))
   end
 
