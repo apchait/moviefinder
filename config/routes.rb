@@ -9,7 +9,7 @@ UberHw::Application.routes.draw do
   resources :actors
 
   get "movies/query/:title" => "movies#query"
-  get "movies/titles" => "movies#titles"
+  get "movies/autocomplete" => "movies#autocomplete"
   resources :movies
 
   # The priority is based upon order of creation: first created -> highest priority.

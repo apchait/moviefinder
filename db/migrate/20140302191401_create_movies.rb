@@ -2,6 +2,7 @@ class CreateMovies < ActiveRecord::Migration
   def change
     create_table :movies do |t|
       t.string :title
+      t.string :downcase_title
       t.string :release_year
       t.text :fun_facts
       t.string :production_company

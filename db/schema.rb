@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140302195546) do
 
   create_table "movies", force: true do |t|
     t.string   "title"
+    t.string   "downcase_title"
     t.string   "release_year"
     t.text     "fun_facts"
     t.string   "production_company"

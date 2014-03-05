@@ -2,41 +2,42 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
 
   def query
+    puts params, "PARAMS"
     # Also try to find movies by writers directors actors "personalities"
     @movie = Movie.find_by_title(params[:title])
 
     actor_string = ""
     @movie.actors.each do |a|
-      actor_string += a.name + " ,"
+      actor_string = actor_string + a.name + ", " if a.name
     end
-    actor_string = actor_string[0..-2]
+    actor_string = actor_string[0..-3]
 
     writer_string = ""
     @movie.writers.each do |w|
-      writer_string += w.name + " ,"
+      writer_string = writer_string + w.name + ", "
     end
-    writer_string = writer_string[0..-2]
+    writer_string = writer_string[0..-3]
 
     director_string = ""
     @movie.directors.each do |d|
-      director_string += d.name + " ,"
+      director_string = director_string + d.name + ", "
     end
-    director_string = director_string[0..-2]
+    director_string = director_string[0..-3]
 
     respond_to do |format|
-      format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string) }
+      format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string, :locations => @movie.locations) }
     end
   end
 
-  def titles
-    puts "QUERY", params
-    movies = Movie.where("title LIKE ?", "#{params[:term]}%")
-    titles = []
+  def autocomplete
+    movies = Movie.where("downcase_title LIKE ?", "#{params[:term].downcase}%")
+    options = []
     movies.all.each do |m|
-      titles << m.title
+      #options << {:label => m.title, :value => m.id }
+      options << m.title
     end
     respond_to do |format|
-      format.json { render json: titles }
+      format.json { render json: options }
     end
   end
 
@@ -108,6 +109,6 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:title, :release_year, :fun_facts, :director_id)
+      params.require(:movie).permit(:title, :downcase_title, :release_year, :fun_facts, :director_id)
     end
 end
