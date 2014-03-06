@@ -11,8 +11,7 @@ jQuery ->
 		url =  '/movies/query/' + title + '.json'
 		$.get url, (response) ->			
 			if response
-				# Geocode the locations
-				console.log response.locations
+				console.log response
 				map.featureLayer.setGeoJSON(response.locations)
 				map.featureLayer.on 'mouseover', (e) ->
 					e.layer.openPopup()
@@ -23,11 +22,16 @@ jQuery ->
 				$.each response, (i,v) ->
 					# Fill info
 					$("#" + i).html(v)
+				$('#rt-url').attr('href', "http://www.rottentomatoes.com/m/" + response["rt_id"])
+				$('#poster').attr('src', response["poster_url"])
 
 	$( "#query" ).autocomplete
 		source: "/movies/autocomplete.json",
 		minLength: 0,
 		select: ( event, ui ) ->
 			getMovie(ui.item.value)
+
+	$('#search-btn').click () ->
+		getMovie($("#query").val())
 
 	map = L.mapbox.map('map', 'examples.map-9ijuk24y').setView([37.75,-122.45], 12)

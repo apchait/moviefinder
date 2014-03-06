@@ -106,6 +106,7 @@ namespace :script do
 				r["movies"].each do |m|
 					if m["title"] == movie.title
 						puts "Found Match", m
+						puts m["synopsis"]
 						movie.update_attributes(
 							rt_id: m["id"],
 							mpaa_rating: m["mpaa_rating"], 
