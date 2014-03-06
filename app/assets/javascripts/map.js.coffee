@@ -23,7 +23,15 @@ jQuery ->
 				# Add movie data to left bar
 				$.each ["title", "release_year"], (i,v) ->
 					$("#" + v).html(response[v])
-				$("#title-link").attr('href', "http://www.rottentomatoes.com/m/" + response["rt_id"])
+				# Add the RT link if it exists, google search the link into RT if not
+				if response["rt_id"]
+					href = "http://www.rottentomatoes.com/m/" + response["rt_id"]
+				else
+					href = "https://www.google.com/#q=site:www.rottentomatoes.com " + response['title']
+				$("#title-link").attr('href', href)
+				# Add a poster image that links back to the Rotten Tomatoes page
+				$('#rt-url').attr('href', href)
+				$('#poster').attr('src', response["poster_url"])
 
 				# Add personalities in their respective sections with links to imdb profiles
 				$.each ["actors", "writers", "directors"], (i,v) ->
@@ -34,10 +42,6 @@ jQuery ->
 							else
 								$("#" + v).append($("<span>").html(personality["name"]))
 							$("#" + v).append("<br/>")
-
-				# Add a poster image that links back to the Rotten Tomatoes page
-				$('#rt-url').attr('href', "http://www.rottentomatoes.com/m/" + response["rt_id"])
-				$('#poster').attr('src', response["poster_url"])
 
 	# Initialize jQuery autocomplete on the search bar
 	# Source will be called with params["term"] containing the search term on submit
