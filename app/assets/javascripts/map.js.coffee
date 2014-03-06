@@ -60,6 +60,7 @@ jQuery ->
 
 	# See all options button activates autocomplete without a query to show all options
 	$("#see-all").click (e) ->
+		$("#query").val("")
 		$("#query").autocomplete("search")
 
 	# Initiate the MapBox map on page ready
