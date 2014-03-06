@@ -35,6 +35,7 @@ jQuery ->
 
 				# Add personalities in their respective sections with links to imdb profiles
 				$.each ["actors", "writers", "directors"], (i,v) ->
+					$("#" + v).html("")
 					$.each response[v], (j,personality) ->
 						if personality["name"]
 							if personality["imdb_id"]

@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   def query
     # REFACTOR - Allow queries to be in the form of names of writers, directors and actors
     # Move this into a background process
-    # Movies with periods and quotes in title have trouble
+    # Movies with periods in title have trouble
     @movie = Movie.find_by_title(params[:title])
 
     # MapBox takes geojson information for markers
