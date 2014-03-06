@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
   def query
     puts params, "PARAMS"
     # Also try to find movies by writers directors actors "personalities"
+    # Movies with periods in title have trouble
     @movie = Movie.find_by_title(params[:title])
 
     actor_string = ""
