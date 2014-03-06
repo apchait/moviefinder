@@ -12,6 +12,7 @@ jQuery ->
 		$.get url, (response) ->			
 			if response
 				console.log response
+				$("#query").val('')
 				map.featureLayer.setGeoJSON(response.locations)
 				map.featureLayer.on 'mouseover', (e) ->
 					e.layer.openPopup()
