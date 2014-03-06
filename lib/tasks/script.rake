@@ -1,4 +1,6 @@
 namespace :script do
+	require 'CGI'
+
 	desc "Geocode Movie Locations"
 	task geocode_locations: :environment do
 		require 'httparty'
@@ -8,7 +10,7 @@ namespace :script do
 		Location.where("lat is NULL").each do |location|
 			if location.description
 				puts "Geocoding #{location.description}"
-				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location.description.gsub(' ', '+')}+San+Francisco+CA&sensor=true&key=#{KEY}"
+				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(location.description)}+San+Francisco+CA&sensor=true&key=#{KEY}"
 				r = HTTParty.get(url)
 				if r["results"][0]
 					attributes = {
@@ -35,7 +37,7 @@ namespace :script do
 		Location.all.each do |location|
 			if location.lat > 38.552461 or location.lat < 36.774092 or location.lng < -123.301363 or location.lng > -120.104097
 				puts location.description
-				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location.description.gsub(' ', '+')}+San+Francisco+CA+USA&sensor=true&key=#{KEY}"
+				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(location.description)}+San+Francisco+CA+USA&sensor=true&key=#{KEY}"
 				puts url
 				if false # if param to geocode
 					# Check if there is an & since Google Maps API prefers "and"
@@ -98,7 +100,7 @@ namespace :script do
 		require 'json'
 		
 		Movie.where("rt_id is NULL").each do |movie|
-			url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=#{movie.title.gsub(' ','+')}&apikey=3s7vy9fz9bqhmdf8zmbtkm3s"
+			url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=#{CGI.escape(movie.title)}&apikey=3s7vy9fz9bqhmdf8zmbtkm3s"
 			puts "Finding #{movie.title}"
 			r = HTTParty.get(url)
 			r = JSON.parse r
@@ -131,5 +133,25 @@ namespace :script do
 			end
 		end
 	end
-#rtkey 3s7vy9fz9bqhmdf8zmbtkm3s
+
+	desc "Fetch IMDB id's for Personalities"
+	task imdb_ids: :environment do
+		require 'httparty'
+		require 'json'
+		Personality.where('imdb_id is NULL and name is not NULL').each do |p|
+			url = "http://api.themoviedb.org/3/search/person?api_key=1387a420cb70b542891552032ec1e74b&query=" + CGI.escape(p.name)
+			puts url
+			r = HTTParty.get(url)
+			if r["total_results"] >= 1
+				r["results"].each do |result|
+					if p.name == result["name"]
+						puts "match, #{result}"
+						url = "http://api.themoviedb.org/3/person/#{result["id"]}?api_key=1387a420cb70b542891552032ec1e74b"
+						r = HTTParty.get(url)
+						p.update_attributes imdb_id: r["imdb_id"]
+					end
+				end
+			end
+		end
+	end
 end

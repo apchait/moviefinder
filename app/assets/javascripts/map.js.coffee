@@ -7,7 +7,6 @@ jQuery ->
 		console.log event
 
 	getMovie = (title) ->
-		console.log title
 		url =  '/movies/query/' + title + '.json'
 		$.get url, (response) ->			
 			if response
@@ -20,9 +19,22 @@ jQuery ->
 					e.layer.closePopup()
 
 				map.fitBounds(map.featureLayer.getBounds()).setZoom( 15 )
-				$.each response, (i,v) ->
-					# Fill info
-					$("#" + i).html(v)
+				
+
+				$.each ["title", "release_year"], (i,v) ->
+					$("#" + v).html(response[v])
+
+				$.each ["actors", "writers", "directors"], (i,v) ->
+					$.each response[v], (j,personality) ->
+						if personality["name"]
+							if personality["imdb_id"]
+								$("#" + v).append $("<a>").attr("href", "http://www.imdb.com/name/" + personality["imdb_id"]).attr("target", "_blank").html(personality["name"] + " ")
+							else
+								$("#" + v).append($("<span>").html(personality["name"]))
+							
+							$("#" + v).append("<br/>")
+
+
 				$('#rt-url').attr('href', "http://www.rottentomatoes.com/m/" + response["rt_id"])
 				$('#poster').attr('src', response["poster_url"])
 

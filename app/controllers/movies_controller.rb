@@ -2,28 +2,10 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
 
   def query
-    puts params, "PARAMS"
+
     # Also try to find movies by writers directors actors "personalities"
     # Movies with periods in title have trouble
     @movie = Movie.find_by_title(params[:title])
-
-    actor_string = ""
-    @movie.actors.each do |a|
-      actor_string = actor_string + a.name + ", " if a.name
-    end
-    actor_string = actor_string[0..-3]
-
-    writer_string = ""
-    @movie.writers.each do |w|
-      writer_string = writer_string + w.name + ", "
-    end
-    writer_string = writer_string[0..-3]
-
-    director_string = ""
-    @movie.directors.each do |d|
-      director_string = director_string + d.name + ", "
-    end
-    director_string = director_string[0..-3]
 
     geojson = []
     @movie.locations.each do |l|
@@ -31,7 +13,8 @@ class MoviesController < ApplicationController
     end
     
     respond_to do |format|
-      format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string, :locations => geojson) }
+      format.json { render json: @movie.as_json(:include => [:actors, :writers, :directors]).merge({:locations => geojson}) }
+      #format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string, :locations => geojson) }
     end
   end
 
