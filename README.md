@@ -1,7 +1,7 @@
 ## Movie Finder
 A web app that shows on a map where movies have been filmed in San Francisco. The user can search for movie titles via an autocomplete search field and see a map of film shoot locations.
 
-The app is built with the Ruby on Rails framework. In order for the client to only interact with the apps backend instead of third party serviced film shoot location data was pulled from [DataSF:Film Locations](https://data.sfgov.org/Arts-Culture-and-Recreation-/Film-Locations-in-San-Francisco/yitu-d5am) and seeded into the local database.
+The app is built with the Ruby on Rails framework. In order for the client to only interact with the apps backend instead of third party services, film shoot location data was pulled from [DataSF:Film Locations](https://data.sfgov.org/Arts-Culture-and-Recreation-/Film-Locations-in-San-Francisco/yitu-d5am) and seeded into the local database.
 
 ### Work done
 After setting up the rails app, models were created for the various elements contained in the data. 
@@ -28,4 +28,12 @@ Most of the unique code is contained in four files
 * [Endless Bootstrap Theme](https://wrapbootstrap.com/theme/endless-responsive-admin-template-WB00J6977) - A few UI elements from this template were used for the nav and sidebar.
 
 #### Refactoring
-There are a few comments in the code with refactoring ideas. To begin with, much of the RoR boilerplate code could be removed for the purposes of this app. The biggest improvement would probably be caching the list of movies in the client for autocomplete purposes instead of querying the database.
+There are a few comments in the code with refactoring ideas. 
+* To begin with, much of the RoR boilerplate code could be removed for the purposes of this app. 
+* The biggest improvement would probably be caching the list of movies in the client for autocomplete purposes instead of querying the database.
+
+####Future Features
+* The RT API provides links to clips as well as rating information which is stored in the database. A video section and RT scores would be a nice addition to the UI.
+* Filters such as neighborhood or movie genre
+* Search by director/actor/writer
+* Guided tour of SF Movie Shoots - Pick a starting location and movies shoots you'd like to visit, the app returns an itinerary with directions.
