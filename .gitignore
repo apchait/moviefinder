@@ -15,4 +15,4 @@
 /log/*.log
 /tmp
 
-/config/constants.yml
+/config/app_environment_variables.rb
