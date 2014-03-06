@@ -25,4 +25,4 @@ Most of the unique code is contained in four files
 ####Front End Libraries
 * [MapBox JS](https://www.mapbox.com/mapbox.js) - Interactive mapping library to show the map and place markers
 * [Bootstrap](http://getbootstrap.com/) - For it's CSS framework and elements
-* [Endless Bootstrap Theme](https://wrapbootstrap.com/theme/endless-responsive-admin-template-WB00J6977) - A few UI elements from this template were used for the nav and sidebar.
+* [Endless Bootstrap Theme](https://wrapbootstrap.com/theme/endless-responsive-admin-template-WB00J6977) - A few UI elements and CSS from this template was used for the nav and sidebar.
