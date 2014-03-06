@@ -27,7 +27,7 @@ jQuery ->
 				if response["rt_id"]
 					href = "http://www.rottentomatoes.com/m/" + response["rt_id"]
 				else
-					href = "https://www.google.com/#q=site:www.rottentomatoes.com " + response['title']
+					href = "https://www.google.com/#q=site:www.rottentomatoes.com%20" +  encodeURI(response['title'])
 				$("#title-link").attr('href', href)
 				# Add a poster image that links back to the Rotten Tomatoes page
 				$('#rt-url').attr('href', href)
