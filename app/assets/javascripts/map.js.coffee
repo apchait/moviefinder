@@ -9,6 +9,7 @@ jQuery ->
 		url =  '/movies/query/' + title + '.json'
 		$.get url, (response) ->			
 			if response
+				console.log response
 				# Clear the search bar
 				$("#query").val('')
 				# Set the markers on the map and zoom to fit them all
@@ -22,6 +23,7 @@ jQuery ->
 				# Add movie data to left bar
 				$.each ["title", "release_year"], (i,v) ->
 					$("#" + v).html(response[v])
+				$("#title-link").attr('href', "http://www.rottentomatoes.com/m/" + response["rt_id"])
 
 				# Add personalities in their respective sections with links to imdb profiles
 				$.each ["actors", "writers", "directors"], (i,v) ->
