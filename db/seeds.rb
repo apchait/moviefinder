@@ -4,47 +4,6 @@ filename = 'public/Film_Locations_in_San_Francisco_cleaned.csv'
 
 columns = {:title => 0, :release_year => 1, :location => 2, :fun_facts => 3, :production_company => 4, :distributor => 5, :director => 6, :writer => 7, :actor1 => 8, :actor2 => 9, :actor3 => 10}
 
-# pure = []
-# paren = []
-# pier = []
-# none = []
-# CSV.foreach(filename, :headers => true) do |row|
-# 	base_url = "https://maps.googleapis.com/maps/api/geocode/json?address="
-# 	key = "&sensor=true&key=AIzaSyBnp5wx1dBlTVW-CmTYsX6-O92GyGnhs9o"
-# 	location = row[columns[:location]]
-# 	if location
-# 		url = base_url + location.gsub(' ', '+') + key
-# 		response = HTTParty.get(url)
-
-
-		# Get it from google api
-
-		# # If the string starts with the address
-		# pure_match = location.match(/(^\d+.*)/) 
-		# # Some strings have a name then an address in parens
-		# paren_match = location.match(/\((\d+.*?)\)/)
-		# pier_match = false		
-		# if pure_match
-		# 	pure << pure_match
-		# elsif pier_match
-		# 	pier << location
-		# elsif paren_match
-		# 	paren << [location, paren_match[1]]
-		# else
-		# 	none << location
-		# end
-# 	end
-# end
-
-# puts 'pure'
-# puts pure
-# puts 'paren'
-# puts paren
-# puts 'none'
-# puts none
-
-
-
 Movie.delete_all
 Actor.delete_all
 Writer.delete_all

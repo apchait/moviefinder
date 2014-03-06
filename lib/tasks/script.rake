@@ -91,4 +91,44 @@ namespace :script do
 		end
 	end
 
+	desc "Fetch Movie Metadata From Rotten Tomatoes"
+	# Should make sure it's ok to store RT data in our db since we are not calling from the client
+	task rt_data: :environment do
+		require 'httparty'
+		require 'json'
+		
+		Movie.where("rt_id is NULL").each do |movie|
+			url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=#{movie.title.gsub(' ','+')}&apikey=3s7vy9fz9bqhmdf8zmbtkm3s"
+			puts "Finding #{movie.title}"
+			r = HTTParty.get(url)
+			r = JSON.parse r
+			if r["total"] > 0
+				r["movies"].each do |m|
+					if m["title"] == movie.title
+						puts "Found Match", m
+						movie.update_attributes(
+							rt_id: m["id"],
+							mpaa_rating: m["mpaa_rating"], 
+							critics_score: m["ratings"]["critics_score"], 
+							audience_score: m["ratings"]["audience_score"], 
+							synopsis: m["synopsis"], 
+							poster_url: m["posters"]["detailed"]
+						)
+
+						# get clips
+						if m['links']['clips']
+							clips = JSON.parse(HTTParty.get("#{m['links']['clips']}?apikey=3s7vy9fz9bqhmdf8zmbtkm3s"))
+							if clips["clips"].count > 0
+								puts clips
+								movie.update_attributes clip_thumb_url: clips["clips"][0]["thumbnail"], clip_url: clips["clips"][0]["links"]["alternate"]
+							end
+						end
+					else
+						puts "No Match"
+					end
+				end
+			end
+		end
+	end
+#rtkey 3s7vy9fz9bqhmdf8zmbtkm3s
 end

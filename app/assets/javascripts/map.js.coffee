@@ -30,4 +30,4 @@ jQuery ->
 		select: ( event, ui ) ->
 			getMovie(ui.item.value)
 
-	map = L.mapbox.map('map', 'examples.map-9ijuk24y').setView([37.75,-122.45], 12);
+	map = L.mapbox.map('map', 'examples.map-9ijuk24y').setView([37.75,-122.45], 12)
