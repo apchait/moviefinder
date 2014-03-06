@@ -11,7 +11,7 @@ html { height: 100% }
 }*/
 
 body { margin:0; padding:0; }
-#map { position:absolute; top:0; bottom:0; width:100%; }
+#map { position:absolute; top:45px; bottom:0; width:100%;}
 
 #overlay {
 	z-index: 100;
@@ -20,3 +20,4 @@ body { margin:0; padding:0; }
 #poster {
 	margin-left: 40px;
 }
+

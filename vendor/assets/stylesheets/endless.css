@@ -300,6 +300,7 @@
 aside {
   position: absolute;
   display: block;
+  padding-top: 45px;
   float: left;
   width: 285px;
   z-index: 100;
