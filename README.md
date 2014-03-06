@@ -15,7 +15,7 @@ Most of the unique code is contained in four files
 * [db/seeds.rb](https://github.com/apchait/moviefinder/blob/master/db/seeds.rb) - Parses DataSF CSV and creates instances and their relationships.
 * [lib/tasks/script.rake](https://github.com/apchait/moviefinder/blob/master/lib/tasks/script.rake) - Rakefile for assorted tasks such as geocoding address and fetching imdb info for personalities.
 * [app/assets/javascripts/map.js.coffee](https://github.com/apchait/moviefinder/blob/master/app/assets/javascripts/map.js.coffee) - Initializes the map, handles autocomplete queries and display of resulting data.
-* [app/assets/views/map/index.html.erb](https://github.com/apchait/moviefinder/blob/master/app/assets/views/map/index.html.erb) - HTML view for the map page.
+* [app/assets/views/map/index.html.erb](https://github.com/apchait/moviefinder/blob/master/app/views/map/index.html.erb) - HTML view for the map page.
 
 ####Services Used by the Backend
 * Location data came in the form of descriptive address strings thus had be geocoded with the [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/) into lat long pairs.
