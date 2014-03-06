@@ -33,6 +33,7 @@ There are a few comments in the code with refactoring ideas.
 * The biggest improvement would probably be caching the list of movies in the client for autocomplete purposes instead of querying the database.
 
 ####Future Features
+* Feedback for the user while the autocomplete query is being returned by the server, a spinner of sorts in the search bar could achieve this.
 * The RT API provides links to clips as well as rating information which is stored in the database. A video section and RT scores would be a nice addition to the UI.
 * Filters such as neighborhood or movie genre
 * Search by director/actor/writer
