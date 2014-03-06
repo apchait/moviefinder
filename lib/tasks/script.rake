@@ -5,12 +5,12 @@ namespace :script do
 	task geocode_locations: :environment do
 		require 'httparty'
 		# Make key an ENV var
-		KEY = "AIzaSyBnp5wx1dBlTVW-CmTYsX6-O92GyGnhs9o"
+		key = ENV["GOOGLE_MAPS_KEY"]
 
 		Location.where("lat is NULL").each do |location|
 			if location.description
 				puts "Geocoding #{location.description}"
-				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(location.description)}+San+Francisco+CA&sensor=true&key=#{KEY}"
+				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(location.description)}+San+Francisco+CA&sensor=true&key=#{key}"
 				r = HTTParty.get(url)
 				if r["results"][0]
 					attributes = {
@@ -33,11 +33,11 @@ namespace :script do
 
 	desc "Find Locations That Are Out Of Bounds From San Francisco Area And Fix"
 	task oob_locations: :environment do
-		KEY = "AIzaSyBnp5wx1dBlTVW-CmTYsX6-O92GyGnhs9o"
+		key = ENV["GOOGLE_MAPS_KEY"]
 		Location.all.each do |location|
 			if location.lat > 38.552461 or location.lat < 36.774092 or location.lng < -123.301363 or location.lng > -120.104097
 				puts location.description
-				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(location.description)}+San+Francisco+CA+USA&sensor=true&key=#{KEY}"
+				url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(location.description)}+San+Francisco+CA+USA&sensor=true&key=#{key}"
 				puts url
 				if false # if param to geocode
 					# Check if there is an & since Google Maps API prefers "and"
@@ -98,9 +98,9 @@ namespace :script do
 	task rt_data: :environment do
 		require 'httparty'
 		require 'json'
-		
+		key = ENV["ROTTEN_TOMATOES_KEY"]
 		Movie.where("rt_id is NULL").each do |movie|
-			url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=#{CGI.escape(movie.title)}&apikey=3s7vy9fz9bqhmdf8zmbtkm3s"
+			url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=#{CGI.escape(movie.title)}&apikey=#{key}"
 			puts "Finding #{movie.title}"
 			r = HTTParty.get(url)
 			r = JSON.parse r
@@ -138,8 +138,10 @@ namespace :script do
 	task imdb_ids: :environment do
 		require 'httparty'
 		require 'json'
+		
+		key = ENV["MOVIE_DB_KEY"]
 		Personality.where('imdb_id is NULL and name is not NULL').each do |p|
-			url = "http://api.themoviedb.org/3/search/person?api_key=1387a420cb70b542891552032ec1e74b&query=" + CGI.escape(p.name)
+			url = "http://api.themoviedb.org/3/search/person?api_key=#{key}&query=" + CGI.escape(p.name)
 			puts url
 			r = HTTParty.get(url)
 			if r["total_results"] >= 1

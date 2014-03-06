@@ -3,28 +3,32 @@ class MoviesController < ApplicationController
 
   def query
 
-    # Also try to find movies by writers directors actors "personalities"
-    # Movies with periods in title have trouble
+    # REFACTOR - Allow queries to be in the form of names of writers, directors and actors
+    # Movies with periods and quotes in title have trouble
     @movie = Movie.find_by_title(params[:title])
 
+    # MapBox takes geojson information for markers
     geojson = []
     @movie.locations.each do |l|
       geojson << l.geojson
     end
     
+    # Send off the movie along with actor/writer/director relationships as well as geojson
     respond_to do |format|
       format.json { render json: @movie.as_json(:include => [:actors, :writers, :directors]).merge({:locations => geojson}) }
-      #format.json { render json: @movie.as_json.merge(:actors => actor_string, :writers => writer_string, :directors => director_string, :locations => geojson) }
     end
   end
 
   def autocomplete
+    # Search by lowercase title
+    # REFACTOR - Make the search term something more predictable on both sides
     movies = Movie.where("downcase_title LIKE ?", "#{params[:term].downcase}%")
+    # Gather all the options into an array
     options = []
     movies.all.each do |m|
-      #options << {:label => m.title, :value => m.id }
       options << m.title
     end
+    # Send the options array back for the client to use in the search bar autocomplete
     respond_to do |format|
       format.json { render json: options }
     end
