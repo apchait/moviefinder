@@ -1,5 +1,5 @@
 namespace :script do
-	require 'CGI'
+	require 'cgi'
 
 	desc "Geocode Movie Locations"
 	task geocode_locations: :environment do
